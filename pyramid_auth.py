@@ -11,7 +11,6 @@ from pyramid.security import Allow, Deny, ALL_PERMISSIONS, DENY_ALL
 from pyramid.security import authenticated_userid
 from pyramid.security import forget
 from pyramid.security import remember
-from pyramid.security import unauthenticated_userid
 from pyramid.url import route_url
 from pyramid.view import view_config
 
@@ -48,14 +47,14 @@ class MyAuthenticationPolicy(object):
             return result['userid']
 
     def authenticated_userid(self, request):
-        uid = unauthenticated_userid(request)
+        uid = self.unauthenticated_userid(request)
         # check that the user actually exists
         if uid in USERS:
             return uid
 
     def effective_principals(self, request):
         principals = [Everyone]
-        uid = authenticated_userid(request)
+        uid = self.authenticated_userid(request)
         if uid:
             principals += [Authenticated, 'u:%s' % uid]
             principals.extend(('g:%s' % g for g in GROUPS.get(uid, [])))
