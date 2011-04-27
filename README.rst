@@ -17,13 +17,13 @@ In our example, you have different sections of your website:
 
 So who has access to a given ``User``? We can add an ACL to the user defining
 just that, and same with each ``Page`` in our site. The ACLs for these objects
-can be found by traversing the resource tree using the urls:
+can be found by traversing the resource tree using the urls::
 
     /users/{login}
     /pages/{page}
 
 Your resource tree then becomes a hierarchy of permissions, where at any point
-in the tree you can place an ``__acl__`` on a resource object:
+in the tree you can place an ``__acl__`` on a resource object::
 
     root (/)                   (Root)
     |- users                   (UserContainer)
@@ -31,7 +31,7 @@ in the tree you can place an ``__acl__`` on a resource object:
     `- pages                   (PageContainer)
        `- {page}               (Page)
 
-You can represent this hierarchy in a resource tree:
+You can represent this hierarchy in a resource tree::
 
     class Root(dict):
         # this is the root factory, you can set an __acl__ here for all resources
@@ -66,6 +66,8 @@ You can represent this hierarchy in a resource tree:
 For the User we add in row-level permissions, allowing only the actual
 user to view their data, any other user is disallowed.
 
+::
+
     class User(object):
         # this __acl__ is computed dynamically based on the specific object
         @property
@@ -88,7 +90,7 @@ user to view their data, any other user is disallowed.
             (Allow, 'u:%s' % self.owner_id, 'edit'),
         ]
 
-With a setup like this, you can then map route patterns to your resource tree:
+With a setup like this, you can then map route patterns to your resource tree::
 
     config = Configurator()
 
@@ -107,12 +109,12 @@ the ACLs defined on the Root object.
 You will also need to map your route to view handlers. This can be done two
 different ways.
 
- * Using ``config.add_view`` explicitly:
+ * Using ``config.add_view`` explicitly::
 
     config.add_view(route_name='pages', view='.views.pages_view',
                     permission='view', renderer='pages.mako')
 
- * Using the ``@view_config`` decorator and invoking ``config.scan()``:
+ * Using the ``@view_config`` decorator and invoking ``config.scan()``::
 
     # in your setup code:
 
@@ -126,6 +128,8 @@ different ways.
 
 Great, now we can define our view and use the loaded context object, knowing
 that if the view is executed, the user has the appropriate permissions!
+
+::
 
     def user_view(request):
         user = request.context
