@@ -1,15 +1,13 @@
 This is a demo intended to showcase Pyramid's authorization capabilities,
 specifically for URL Dispatch.
 
-The demo is intended to showcase Pyramid's ability to handle complex
-authorization using the ``ACLAuthorizationPolicy`` through the use of a
-``resource tree``.
+Pyramid is abile to handle complex authorization using the
+``ACLAuthorizationPolicy`` through the use of a ``resource tree``. By default,
+Pyramid uses the resource tree for a lot of different tasks, but when looking at
+URL Dispatch, the interesting aspect is the authorization. Thus, we treat the
+resource tree as a hierarchy of permissions.
 
-By default, Pyramid uses the resource tree for a lot of different tasks, but
-when looking at URL Dispatch, the interesting aspect is the authorization.
-Thus, we treat the resource tree as a hierarchy of permissions.
-
-In our example, you have different sections of your website:
+In this demo, your website will be split up into 2 different sections:
 
  * Managing/viewing the user accounts on the site.
 

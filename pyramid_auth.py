@@ -25,7 +25,6 @@ USERS = {
 }
 
 GROUPS = {
-    'luser': [ 'user' ],
     'admin': [ 'admin' ],
 }
 
@@ -67,11 +66,10 @@ class Root(dict):
 
     def __init__(self, request):
         self.request = request
-        self['users'] = UserContainer(request, self, 'users')
+        self['users'] = UserContainer(self, 'users')
 
 class UserContainer(object):
-    def __init__(self, request, parent, name):
-        self.request = request
+    def __init__(self, parent, name):
         self.__parent__ = parent
         self.__name__ = name
 
