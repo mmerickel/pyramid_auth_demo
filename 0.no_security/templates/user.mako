@@ -1,5 +1,7 @@
 <%inherit file='base.mako' />
 
+<p><a href="${ request.route_url('home') }">Home</a></p>
+
 <h1>User Information</h1>
 <p>Login: ${ user.login }</p>
 <p>Password: ${ user.password }</p>

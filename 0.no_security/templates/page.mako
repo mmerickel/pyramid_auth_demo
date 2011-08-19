@@ -1,7 +1,10 @@
 <%inherit file='base.mako' />
 
-<h1>${ title }</h1>
-<p>Owner: <a href="${ request.route_url('user', login=owner) }">${ owner }</a></p>
-<div class="page_body">
-    ${ body }
+<p>Click <a href="${ request.route_url('edit_page', title=page.uri) }">here</a> to edit this page.</p>
+
+<h1>${ page.title }</h1>
+<p>Owner: <a href="${ request.route_url('user', login=page.owner) }">${ page.owner }</a></p>
+<p>Body:</p>
+<div style="margin-left: 4em;">
+    ${ page.body | n }
 </div>

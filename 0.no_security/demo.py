@@ -3,6 +3,7 @@ import urllib
 from pyramid.authentication import AuthTktAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
 from pyramid.config import Configurator
+from pyramid.httpexceptions import HTTPForbidden
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import authenticated_userid
 from pyramid.security import forget
@@ -37,6 +38,7 @@ PAGES = {}
 def _make_demo_user(login, **kw):
     kw.setdefault('password', login)
     USERS[login] = User(login, **kw)
+    return USERS[login]
 
 _make_demo_user('luser')
 _make_demo_user('editor', groups=['editors'])
@@ -45,10 +47,22 @@ _make_demo_user('admin', groups=['admin'])
 def _make_demo_page(title, **kw):
     uri = kw.setdefault('uri', websafe_uri(title))
     PAGES[uri] = Page(title, **kw)
+    return PAGES[uri]
 
-_make_demo_page('hello', owner='luser', body='<h1>Hello World!</h2>')
+_make_demo_page('hello', owner='luser',
+                body='''
+<h3>Hello World!</h3><p>I'm the body text</p>''')
 
 ### DEFINE VIEWS
+@view_config(context=HTTPForbidden)
+def forbidden_view(request):
+    # do not allow a user to login if they are already logged in
+    if authenticated_userid(request):
+        return HTTPForbidden()
+
+    loc = request.route_url('login', _query=(('next', request.path),))
+    return HTTPFound(location=loc)
+
 @view_config(route_name='home', renderer='home.mako')
 def home_view(request):
     login = authenticated_userid(request)
@@ -116,20 +130,88 @@ def page_view(request):
     page = PAGES[uri]
 
     return {
-        'title': page.title,
-        'owner': page.owner,
-        'body': page.body,
+        'page': page,
     }
 
-@view_config(route_name='create_page', renderer='create_page.mako')
+def validate_page(title, body):
+    errors = []
+
+    title = title.strip()
+    if not title:
+        errors.append('Title may not be empty')
+    elif len(title) > 32:
+        errors.append('Title may not be longer than 32 characters')
+
+    body = body.strip()
+    if not body:
+        errors.append('Body may not be empty')
+
+    return {
+        'title': title,
+        'body': body,
+        'errors': errors,
+    }
+
+@view_config(route_name='create_page', renderer='edit_page.mako')
 def create_page_view(request):
+    owner = authenticated_userid(request)
+    if owner is None:
+        return HTTPForbidden()
+
+    errors = []
+    body = title = ''
+    if request.method == 'POST':
+        title = request.POST.get('title', '')
+        body = request.POST.get('body', '')
+
+        v = validate_page(title, body)
+        title = v['title']
+        body = v['body']
+        errors += v['errors']
+
+        if not errors:
+            page = _make_demo_page(title, owner=owner, body=body)
+            url = request.route_url('page', title=page.uri)
+            return HTTPFound(location=url)
+
+    return {
+        'title': title,
+        'owner': owner,
+        'body': body,
+        'errors': errors,
+    }
+
+@view_config(route_name='edit_page', renderer='edit_page.mako')
+def edit_page_view(request):
     uri = request.matchdict['title']
     page = PAGES[uri]
 
+    errors = []
+    title = page.title
+    body = page.body
+    if request.method == 'POST':
+        title = request.POST.get('title', '')
+        body = request.POST.get('body', '')
+
+        v = validate_page(title, body)
+        title = v['title']
+        body = v['body']
+        errors += v['errors']
+
+        if not errors:
+            del PAGES[uri]
+            page.title = title
+            page.body = body
+            page.uri = websafe_uri(title)
+            PAGES[page.uri] = page
+            url = request.route_url('page', title=page.uri)
+            return HTTPFound(location=url)
+
     return {
-        'title': page.title,
+        'title': title,
         'owner': page.owner,
-        'body': page.body,
+        'body': body,
+        'errors': errors,
     }
 
 ### CONFIGURE PYRAMID
@@ -150,12 +232,12 @@ def main(global_settings, **settings):
     config.add_route('logout', '/logout')
 
     config.add_route('users', '/users')
-    config.add_route('user', '/users/{login}')
+    config.add_route('user', '/user/{login}')
 
     config.add_route('pages', '/pages')
     config.add_route('create_page', '/create_page')
-    config.add_route('page', '/pages/{title}')
-    config.add_route('edit_page', '/pages/{title}/edit')
+    config.add_route('page', '/page/{title}')
+    config.add_route('edit_page', '/page/{title}/edit')
 
     config.scan(__name__)
     return config.make_wsgi_app()
