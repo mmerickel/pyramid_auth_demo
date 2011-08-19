@@ -15,3 +15,8 @@
     <input type="hidden" name="next" value="${ next }">
     <input type="submit" name="submit">
 </form>
+
+<h3>Valid login / password combinations:</h3>
+% for k, v in users.items():
+<p>${ k } / ${ v.password }</p>
+% endfor
