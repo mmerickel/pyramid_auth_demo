@@ -168,14 +168,11 @@ def users_view(request):
         'users': sorted(USERS.keys()),
     }
 
-@view_config(route_name='user', permission='view', renderer='user.mako')
+@view_config(route_name='user', context=User, permission='view',
+             renderer='user.mako')
 def user_view(request):
-    login = request.matchdict['login']
-    user = USERS.get(login)
-    if not user:
-        return HTTPNotFound()
-
-    pages = [p for (t, p) in PAGES.iteritems() if p.owner == login]
+    user = request.context
+    pages = [p for (t, p) in PAGES.iteritems() if p.owner == user.login]
 
     return {
         'user': user,
@@ -188,12 +185,10 @@ def pages_view(request):
         'pages': PAGES.values(),
     }
 
-@view_config(route_name='page', permission='view', renderer='page.mako')
+@view_config(route_name='page', context=Page, permission='view',
+             renderer='page.mako')
 def page_view(request):
-    uri = request.matchdict['title']
-    page = PAGES.get(uri)
-    if not page:
-        return HTTPNotFound()
+    page = request.context
 
     return {
         'page': page,
@@ -246,13 +241,11 @@ def create_page_view(request):
         'errors': errors,
     }
 
-@view_config(route_name='edit_page', permission='edit',
+@view_config(route_name='edit_page', context=Page, permission='edit',
              renderer='edit_page.mako')
 def edit_page_view(request):
     uri = request.matchdict['title']
-    page = PAGES.get(uri)
-    if not page:
-        return HTTPNotFound()
+    page = request.context
 
     errors = []
     title = page.title
