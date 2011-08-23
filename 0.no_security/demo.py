@@ -5,6 +5,7 @@ from pyramid.authorization import ACLAuthorizationPolicy
 from pyramid.config import Configurator
 from pyramid.httpexceptions import HTTPForbidden
 from pyramid.httpexceptions import HTTPFound
+from pyramid.httpexceptions import HTTPNotFound
 from pyramid.security import authenticated_userid
 from pyramid.security import forget
 from pyramid.security import remember
@@ -110,7 +111,10 @@ def users_view(request):
 @view_config(route_name='user', renderer='user.mako')
 def user_view(request):
     login = request.matchdict['login']
-    user = USERS[login]
+    user = USERS.get(login)
+    if not user:
+        return HTTPNotFound()
+
     pages = [p for (t, p) in PAGES.iteritems() if p.owner == login]
 
     return {
@@ -127,7 +131,9 @@ def pages_view(request):
 @view_config(route_name='page', renderer='page.mako')
 def page_view(request):
     uri = request.matchdict['title']
-    page = PAGES[uri]
+    page = PAGES.get(uri)
+    if not page:
+        return HTTPNotFound()
 
     return {
         'page': page,
@@ -184,7 +190,9 @@ def create_page_view(request):
 @view_config(route_name='edit_page', renderer='edit_page.mako')
 def edit_page_view(request):
     uri = request.matchdict['title']
-    page = PAGES[uri]
+    page = PAGES.get(uri)
+    if not page:
+        return HTTPNotFound()
 
     errors = []
     title = page.title
