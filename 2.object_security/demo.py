@@ -5,7 +5,6 @@ from pyramid.authorization import ACLAuthorizationPolicy
 from pyramid.config import Configurator
 from pyramid.httpexceptions import HTTPForbidden
 from pyramid.httpexceptions import HTTPFound
-from pyramid.httpexceptions import HTTPNotFound
 from pyramid.security import ALL_PERMISSIONS
 from pyramid.security import Allow
 from pyramid.security import Authenticated
@@ -72,7 +71,7 @@ _make_demo_page('hello', owner='luser',
 <h3>Hello World!</h3><p>I'm the body text</p>''')
 
 ### MAP GROUPS TO PERMISSIONS
-class Root(object):
+class RootFactory(object):
     __acl__ = [
         (Allow, 'g:admin', ALL_PERMISSIONS),
     ]
@@ -80,7 +79,7 @@ class Root(object):
     def __init__(self, request):
         self.request = request
 
-class UserContainer(object):
+class UserFactory(object):
     __acl__ = [
         (Allow, 'g:admin', ALL_PERMISSIONS),
     ]
@@ -94,7 +93,7 @@ class UserContainer(object):
         user.__name__ = key
         return user
 
-class PageContainer(object):
+class PageFactory(object):
     __acl__ = [
         (Allow, Everyone, 'view'),
         (Allow, Authenticated, 'create'),
@@ -287,23 +286,21 @@ def main(global_settings, **settings):
         settings=settings,
         authentication_policy=authn_policy,
         authorization_policy=authz_policy,
-        root_factory=Root,
+        root_factory=RootFactory,
     )
 
     config.add_route('home', '/')
     config.add_route('login', '/login')
     config.add_route('logout', '/logout')
 
-    config.add_route('users', '/users', factory=UserContainer)
-    config.add_route('user', '/user/{login}', factory=UserContainer,
+    config.add_route('users', '/users', factory=UserFactory)
+    config.add_route('user', '/user/{login}', factory=UserFactory,
                      traverse='/{login}')
 
-    config.add_route('pages', '/pages', factory=PageContainer)
-    config.add_route('create_page', '/create_page', factory=PageContainer)
-    config.add_route('page', '/page/{title}', factory=PageContainer,
-                     traverse='/{title}')
-    config.add_route('edit_page', '/page/{title}/edit', factory=PageContainer,
-                     traverse='/{title}')
+    config.add_route('pages', '/pages')
+    config.add_route('create_page', '/create_page')
+    config.add_route('page', '/page/{title}')
+    config.add_route('edit_page', '/page/{title}/edit')
 
     config.scan(__name__)
     return config.make_wsgi_app()
@@ -313,9 +310,10 @@ if __name__ == '__main__':
     settings = {
         'auth.secret': 'seekrit',
         'mako.directories': '%s:templates' % __name__,
-        'debug_authorization': '1',
+        'pyramid.debug_authorization': '1',
     }
     app = main({}, **settings)
 
     from paste.httpserver import serve
     serve(app, host='0.0.0.0', port='5000')
+
