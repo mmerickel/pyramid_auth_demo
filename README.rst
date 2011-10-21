@@ -1,7 +1,10 @@
 Pyramid has the ability to handle complex authentication and authorization
 patterns. How to do so is a constant source of frustration for new users. This
-is a demo intended to showcase Pyramid's authorization capabilities
-specifically for URL Dispatch.
+is a demo intended to showcase Pyramid's authorization capabilities. A lot of
+the demo focuses on URL Dispatch. If you are interested in traversal, do not
+despair as authorization via traversal is virtually indistinguishable from
+the object-level security demo and all of the concepts learned transfer over
+easily.
 
 This demo is built around a wiki-style website to allows users to view and
 create pages. The supported URL structure is as follows::
@@ -18,7 +21,7 @@ create pages. The supported URL structure is as follows::
     /page/{title}
     /page/{title}/edit
 
-There are 4 different demos in this repository. Each demo will add varying
+There are 4 different projects in this demo. Each project will add varying
 levels of functionality to this application:
 
 0. Base Application
@@ -50,11 +53,12 @@ levels of functionality to this application:
    authentication, we will check the database to ensure that the ``User``
    object still exists, disallowing deleted users from accessing the system.
 
-Pyramid is able to handle complex authorization using the
-``ACLAuthorizationPolicy`` through the use of a ``resource tree``. By default,
-Pyramid uses the resource tree for a lot of different tasks, but when looking at
-URL Dispatch, the interesting aspect is the authorization. Thus, we treat the
-resource tree as a hierarchy of permissions.
+Authorization Basics
+====================
+
+By default, Pyramid uses the resource tree for a lot of different tasks, but
+when looking at URL Dispatch, the interesting aspect is the authorization.
+Thus, we treat the resource tree as a hierarchy of permissions.
 
 In this demo, your website will be split up into 2 different sections:
 
