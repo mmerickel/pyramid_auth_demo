@@ -1,8 +1,7 @@
 .. _index:
 
-*****************
 Pyramid Auth Demo
-*****************
+=================
 
 Pyramid has the ability to handle complex authentication and authorization
 patterns. How to do so is a constant source of frustration for new users.
@@ -16,6 +15,7 @@ This demo is built around a wiki-style website that allows users to view and
 create pages.
 
 .. toctree::
+   :maxdepth: 2
 
    intro
    auth_vs_auth

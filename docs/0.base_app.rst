@@ -94,7 +94,7 @@ visits.
 Logout View
 -----------
 
-The `logout view` is very simple, but it showcases the sue of
+The `logout view` is very simple, but it showcases the use of
 ``pyramid.security.forget`` to generate a list of headers that should
 be sent back as part of the `response`. These headers generally will
 delete the cookies set by ``pyramid.security.remember``.

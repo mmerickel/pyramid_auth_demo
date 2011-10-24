@@ -13,10 +13,8 @@ concepts learned transfer over easily.
 Learn a little bit about how Pyramid's auth system works before diving
 into the demo applications:
 
-.. toctree::
-
-   auth_vs_auth
-   resource_trees
+* :ref:`auth_vs_auth`
+* :ref:`the_resource_tree`
 
 This demo is built around a wiki-style website that allows users to view and
 create pages. The supported URL structure is as follows::
