@@ -22,10 +22,10 @@ class User(object):
             (Allow, self.login, 'view'),
         ]
 
-    def __init__(self, login, password, groups=[]):
+    def __init__(self, login, password, groups=None):
         self.login = login
         self.password = password
-        self.groups = groups
+        self.groups = groups or []
 
     def check_password(self, passwd):
         return self.password == passwd

@@ -13,10 +13,10 @@ from pyramid.view import view_config
 
 ### DEFINE MODEL
 class User(object):
-    def __init__(self, login, password, groups=[]):
+    def __init__(self, login, password, groups=None):
         self.login = login
         self.password = password
-        self.groups = groups
+        self.groups = groups or []
 
     def check_password(self, passwd):
         return self.password == passwd
