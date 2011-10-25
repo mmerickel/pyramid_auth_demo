@@ -4,6 +4,9 @@
 Object-Level Security
 =====================
 
+Goals
+=====
+
 In this demo, your website will be split up into 2 different sections:
 
 * Managing/viewing the user accounts on the site.

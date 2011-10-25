@@ -11,8 +11,11 @@ traversal, do not despair as authorization via traversal is virtually
 indistinguishable from the object-level security demo and all of the
 concepts learned transfer over easily.
 
-This demo is built around a wiki-style website that allows users to view and
-create pages.
+This demo is built around a wiki-style website that allows users to view
+and create pages. All of the code for each demo is available on GitHub
+at `<https://github.com/mmerickel/pyramid_auth_demo>`__ and should be used
+to follow along as only certain parts of each demo are shown in the
+narrative.
 
 .. toctree::
    :maxdepth: 2

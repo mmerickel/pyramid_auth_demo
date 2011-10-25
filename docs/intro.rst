@@ -16,8 +16,12 @@ into the demo applications:
 * :ref:`auth_vs_auth`
 * :ref:`the_resource_tree`
 
-This demo is built around a wiki-style website that allows users to view and
-create pages. The supported URL structure is as follows::
+
+This demo is built around a wiki-style website that allows users to view
+and create pages. All of the code for each demo is available on GitHub
+at `<https://github.com/mmerickel/pyramid_auth_demo>`__ and should be used
+to follow along as only certain parts of each demo are shown in the
+narrative. The supported URL structure is as follows::
 
    /
    /login
