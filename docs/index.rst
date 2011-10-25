@@ -20,10 +20,10 @@ create pages.
    intro
    auth_vs_auth
    resource_trees
-   0.base_app
-   1.group_security
-   2.object_security
-   3.full_app
+   base_app
+   group_security
+   object_security
+   full_app
 
 Indices and tables
 ==================

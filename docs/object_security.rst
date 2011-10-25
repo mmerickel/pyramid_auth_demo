@@ -1,8 +1,8 @@
-.. _2.object_security:
+.. _object_security:
 
-========================
-2. Object-Level Security
-========================
+=====================
+Object-Level Security
+=====================
 
 In this demo, your website will be split up into 2 different sections:
 

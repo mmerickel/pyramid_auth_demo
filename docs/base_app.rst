@@ -1,8 +1,8 @@
-.. _0.base_app:
+.. _base_app:
 
-===================
-0. Base Application
-===================
+================
+Base Application
+================
 
 This is a basic wiki-style application. A visitor can view, add, and edit
 pages. They can also login, logout and view information on users of the
@@ -19,6 +19,11 @@ system. The URL structure is as follows::
    /create_page
    /page/{title}
    /page/{title}/edit
+
+This demo isn't here to teach you how to use URL Dispatch or setup a
+basic application. If you have any questions about how to setup this
+simple application with no security, please go back to the Pyramid
+documentation and tutorials to learn more.
 
 Startup
 =======

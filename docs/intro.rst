@@ -34,12 +34,12 @@ create pages. The supported URL structure is as follows::
 There are 4 different projects in this demo. Each project will add varying
 levels of functionality to this application:
 
-0. :ref:`0.base_app`
+#. :ref:`base_app`
 
    Allow anyone to do anything. This is the base website we'll be starting
    with to demonstrate different levels of security.
 
-1. :ref:`1.group_security`
+#. :ref:`group_security`
 
    Allow users different privileges based on their :term:`group` (aka
    their :term:`principal` identifiers).
@@ -47,7 +47,7 @@ levels of functionality to this application:
    For example, users "michael" and "chris" are in the "admin" group, while
    "bob" is only in the "user" group.
 
-2. :ref:`2.object_security`
+#. :ref:`object_security`
 
    Permit users access to all ``Page`` objects for which they are tagged
    as the owner, or permit a user to access only his or her ``User`` object.
@@ -56,7 +56,7 @@ levels of functionality to this application:
    "edit" and "delete" it. But he cannot "edit" or "delete" the "Pyramid"
    ``Page`` because he is not the owner.
 
-3. :ref:`3.full_app`
+#. :ref:`full_app`
 
    Look at how a real application can be configured around a ``User`` object
    that is available on the current request. We will implement our own
