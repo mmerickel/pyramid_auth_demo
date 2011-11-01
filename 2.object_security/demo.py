@@ -297,10 +297,12 @@ def main(global_settings, **settings):
     config.add_route('user', '/user/{login}', factory=UserFactory,
                      traverse='/{login}')
 
-    config.add_route('pages', '/pages')
-    config.add_route('create_page', '/create_page')
-    config.add_route('page', '/page/{title}')
-    config.add_route('edit_page', '/page/{title}/edit')
+    config.add_route('pages', '/pages', factory=PageFactory)
+    config.add_route('create_page', '/create_page', factory=PageFactory)
+    config.add_route('page', '/page/{title}', factory=PageFactory,
+                     traverse='/{title}')
+    config.add_route('edit_page', '/page/{title}/edit', factory=PageFactory,
+                     traverse='/{title}')
 
     config.scan(__name__)
     return config.make_wsgi_app()
