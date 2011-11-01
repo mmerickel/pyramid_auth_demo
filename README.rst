@@ -54,6 +54,6 @@ levels of functionality to this application:
 ..    object still exists, disallowing deleted users from accessing the system.
 
 Please reference the documentation in the `docs/` directory for explanations
-of the different demos and levels of security. A rendered version of the
+of the different projects and levels of security. A rendered version of the
 documentation can be found at
 http://michael.merickel.org/projects/pyramid_auth_demo.
