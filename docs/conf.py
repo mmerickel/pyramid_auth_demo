@@ -44,7 +44,7 @@ copyright = '2011, Michael Merickel <oss@m.merickel.org>'
 # other places throughout the built documents.
 #
 # The short X.Y version.
-version = '0.1'
+version = '1.0'
 # The full version, including alpha/beta/rc tags.
 release = version
 

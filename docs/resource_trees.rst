@@ -12,13 +12,13 @@ specifically for security.
 Root Factory
 ============
 
-Resources are organized into a tree of objects that are traversed using a
-path (``'/foo/bar/baz'``). Each :term:`resource` is expected to implement
-the ``__getitem__`` method and return the next resource in the tree. Pyramid
-uses a factory which, given the current request object, returns the root of
-the tree. Returning a different tree per request is completely valid.
-Below are two examples of factories that return a ``Resource`` instance as
-the root of the tree.
+Resources are organized into a tree of objects that are traversed using
+a path (``'/foo/bar/baz'``). Each :term:`resource` is expected to
+implement the ``__getitem__`` method and return the next resource in the
+tree. Pyramid uses a :term:`root factory` which, given the current
+request object, returns the root of the tree. Returning a different tree
+per request is completely valid. Below are two examples of factories
+that return a ``Resource`` instance as the root of the tree.
 
 .. code-block:: python
 
@@ -80,10 +80,11 @@ Using this setup, Pyramid will use the ``root_factory`` to create the
     >>> context
     <Employee object at ...>
 
-If at any point an invalid ``key`` is supplied, a ``KeyError`` exception can
-be raised which will end the traversal. The last valid resource in the
-tree will then be used as the ``context``. However, in our simple example
-any (corporation, department, employee) combination will be accepted.
+If at any point an invalid ``key`` is supplied, a ``KeyError`` exception
+can be raised which will end the traversal. The last valid resource in
+the tree will then be used as the ``context``. However, in our simple
+example any (corporation, department, employee) combination will be
+accepted.
 
 Security
 ========

@@ -35,7 +35,7 @@ class Page(object):
     def __acl__(self):
         return [
             (Allow, self.owner, 'edit'),
-            (Allow, 'g:editors', 'edit'),
+            (Allow, 'g:editor', 'edit'),
         ]
 
     def __init__(self, title, uri, body, owner):
@@ -58,7 +58,7 @@ def _make_demo_user(login, **kw):
     return USERS[login]
 
 _make_demo_user('luser')
-_make_demo_user('editor', groups=['editors'])
+_make_demo_user('editor', groups=['editor'])
 _make_demo_user('admin', groups=['admin'])
 
 def _make_demo_page(title, **kw):
@@ -161,14 +161,13 @@ def logout_view(request):
     loc = request.route_url('home')
     return HTTPFound(location=loc, headers=headers)
 
-@view_config(route_name='users',  permission='view', renderer='users.mako')
+@view_config(route_name='users', permission='view', renderer='users.mako')
 def users_view(request):
     return {
         'users': sorted(USERS.keys()),
     }
 
-@view_config(route_name='user', context=User, permission='view',
-             renderer='user.mako')
+@view_config(route_name='user', permission='view', renderer='user.mako')
 def user_view(request):
     user = request.context
     pages = [p for (t, p) in PAGES.iteritems() if p.owner == user.login]
@@ -184,8 +183,7 @@ def pages_view(request):
         'pages': PAGES.values(),
     }
 
-@view_config(route_name='page', context=Page, permission='view',
-             renderer='page.mako')
+@view_config(route_name='page', permission='view', renderer='page.mako')
 def page_view(request):
     page = request.context
 
@@ -240,7 +238,7 @@ def create_page_view(request):
         'errors': errors,
     }
 
-@view_config(route_name='edit_page', context=Page, permission='edit',
+@view_config(route_name='edit_page', permission='edit',
              renderer='edit_page.mako')
 def edit_page_view(request):
     uri = request.matchdict['title']
@@ -312,7 +310,6 @@ if __name__ == '__main__':
     settings = {
         'auth.secret': 'seekrit',
         'mako.directories': '%s:templates' % __name__,
-        'pyramid.debug_authorization': '1',
     }
     app = main({}, **settings)
 

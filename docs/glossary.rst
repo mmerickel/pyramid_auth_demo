@@ -57,4 +57,21 @@ Glossary
      The act of descending "up" a tree of resource objects from a root
      resource in order to find a :term:`context` resource.
 
+   root factory
+     The "root factory" is called on every request sent to the application.
+     The root factory returns the traversal root of an application. It is
+     possible to define a default root factory, as well as factories
+     per-route when using URL Dispatch.
+
+   router
+     The :term:`WSGI` application created when you start a Pyramid
+     application. The router intercepts requests, invokes traversal and/or
+     URL dispatch, calls view functions, and returns responses to the WSGI
+     server on behalf of your Pyramid application.
+
+   WSGI
+     `Web Server Gateway Interface <http://wsgi.org/>`__.  This is a
+     Python standard for connecting web applications to web servers,
+     similar to the concept of Java Servlets.  Pyramid requires that your
+     application be served as a WSGI application.
 

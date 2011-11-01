@@ -45,7 +45,7 @@ def _make_demo_user(login, **kw):
     return USERS[login]
 
 _make_demo_user('luser')
-_make_demo_user('editor', groups=['editors'])
+_make_demo_user('editor', groups=['editor'])
 _make_demo_user('admin', groups=['admin'])
 
 def _make_demo_page(title, **kw):
@@ -61,7 +61,7 @@ _make_demo_page('hello', owner='luser',
 class Root(object):
     __acl__ = [
         (Allow, Authenticated, 'create'),
-        (Allow, 'g:editors', 'edit'),
+        (Allow, 'g:editor', 'edit'),
         (Allow, 'g:admin', ALL_PERMISSIONS),
     ]
 
@@ -121,7 +121,7 @@ def logout_view(request):
     loc = request.route_url('home')
     return HTTPFound(location=loc, headers=headers)
 
-@view_config(route_name='users',  permission='admin', renderer='users.mako')
+@view_config(route_name='users', permission='admin', renderer='users.mako')
 def users_view(request):
     return {
         'users': sorted(USERS.keys()),

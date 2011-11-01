@@ -10,16 +10,16 @@ enough for a lot of applications. It is also a good base to begin other
 types of authorization. We'll be using Pyramid's default
 :term:`authorization policy`, the ``ACLAuthorizationPolicy``.
 
-The demo application defines 2 groups: "editors" and "admin". It also
+The demo application defines 2 groups: "editor" and "admin". It also
 supports a third principal ``pyramid.security.Authenticated``, which
 is automatically added by Pyramid's baked-in authentication policies.
 
 Goals
 =====
 
-#. Define 2 groups, "editors" and "admin".
+#. Define 2 groups, "editor" and "admin".
 #. Restrict creation of pages to `authenticated` users.
-#. Restrict editing of existing pages to users in the "editors" or
+#. Restrict editing of existing pages to users in the "editor" or
    "admin" groups.
 #. Restrict viewing of user-related pages to only "admin" users.
 
@@ -57,7 +57,7 @@ unless they are an "editor" or an "admin".
 
     [
         (Allow, Authenticated, 'create'),
-        (Allow, 'g:editors', 'edit'),
+        (Allow, 'g:editor', 'edit'),
         (Allow, 'g:admin', ALL_PERMISSIONS),
     ]
 
@@ -85,7 +85,7 @@ This is done via the ``__acl__`` property of the :term:`context`.
    :pyobject: Root
 
 See how the ``__acl__`` defines the ACL discussed previously. This
-``Root`` object also acts as a root factory and the application can
+``Root`` object is also a :term:`root factory` and the application can
 be configured to use it as such. Root factories are explained in more
 detail in :ref:`the_resource_tree`.
 
@@ -117,7 +117,7 @@ Edit Page View
 --------------
 
 Editing of pages in the wiki via ``'/page/{title}/edit'`` should only be
-allowed by users in the "editors" or "admin" groups. We've already
+allowed by users in the "editor" or "admin" groups. We've already
 mapped these groups to the "edit" permission, so simply add it to the
 view.
 

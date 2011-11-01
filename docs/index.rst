@@ -26,7 +26,6 @@ narrative.
    base_app
    group_security
    object_security
-   full_app
 
 Indices and tables
 ==================
@@ -42,4 +41,5 @@ Indices and tables
    :hidden:
 
    glossary
+   full_app
 
