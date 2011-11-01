@@ -65,7 +65,8 @@ The cascading nature of the tree can be prevented in 2 simple ways
 without replacing the ``ACLAuthorizationPolicy`` with a different
 implementation.
 
-#. Add an entry at the end of each ACL for
+#. Add an entry at the end of each ACL for ``pyramid.security.DENY_ALL``
+   which is effectively an alias for the entry
    ``(Deny, Everyone, ALL_PERMISSIONS)``. If no matching entry is found
    in the ACL prior to this entry, then this one will match effectively
    preventing the policy from going any further.
