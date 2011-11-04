@@ -56,7 +56,7 @@ Views
 =====
 
 Most of the views are cookie cutter, but views relating to authentication
-have been singled how and explained in more detail.
+have been singled out and explained in more detail.
 
 Forbidden View
 --------------
@@ -64,7 +64,7 @@ Forbidden View
 The `forbidden view` is an exception view registered for
 ``pyramid.httpexceptions.HTTPForbidden``. When a protected resource
 is accessed with invalid permissions, Pyramid will raise an an
-``HTTPForbidden`` exception. The base application provides 2
+``HTTPForbidden`` exception. The base application provides two
 possibilities, depending on whether the user is already logged in
 when the permissions checks fail. If the user is not logged in they
 are redirected to the `login` page. However, if they were already
@@ -90,12 +90,6 @@ visits.
 .. literalinclude:: ../0.no_security/demo.py
    :pyobject: login_view
 
-.. note::
-
-   Unauthenticated users cannot create pages because a ``Page`` must
-   have an `owner`. Notice that this is protected by manually raising
-   ``HTTPForbidden`` which will invoke the `Forbidden View`_.
-
 Logout View
 -----------
 
@@ -106,4 +100,22 @@ delete the cookies set by ``pyramid.security.remember``.
 
 .. literalinclude:: ../0.no_security/demo.py
    :pyobject: logout_view
+
+Create Page View
+----------------
+
+Unauthenticated users cannot create pages because a ``Page`` must
+have an `owner`. This is protected by manually raising
+``HTTPForbidden`` from *within* the ``create_page_view`` which will
+invoke the `Forbidden View`_.
+
+.. code-block:: python
+
+   @view_config(route_name='create_page', renderer='edit_page.mako')
+   def create_page_view(request):
+       owner = authenticated_userid(request)
+       if owner is None:
+           return HTTPForbidden()
+
+       # ...
 

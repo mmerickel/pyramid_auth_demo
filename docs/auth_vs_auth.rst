@@ -45,8 +45,7 @@ Determining which users have access to a resource is the job of an
 
 From the previous section we have distilled the user down into a list of
 :term:`principal` identifiers. The :term:`authorization policy` will allow
-or deny access based on the list of :term:`principal` identifiers and the
-:term:`permission`.
+or deny access based on those principals and the :term:`permission`.
 
 Context-Level Security
 ----------------------

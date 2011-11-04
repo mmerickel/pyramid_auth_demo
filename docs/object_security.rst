@@ -108,7 +108,7 @@ possibilities for the path used in traversal.
 Why Is This Interesting?
 ------------------------
 
-A URL in a "REST"-y world (to beat a dead term) is intended to focus
+An URL in a "REST"-y world (to beat a dead term) is intended to focus
 on a single resource. This maps very well to Pyramid's concept of
 traversing a tree of resources. Object-level security can be thought
 of in this way, where the resource in question is modifiable by
@@ -241,7 +241,7 @@ achieved via dynamic ACLs on the respective objects.
 Isn't This Just Traversal? Why Even Bother With URL Dispatch?
 -------------------------------------------------------------
 
-It's very very close to traversal. The traversal machinery is executed
+It's very close to traversal. The traversal machinery is executed
 whether using URL Dispatch or Traversal. The difference is simply how
 `view lookup` occurs. When using Traversal, the computed context and
 view name are the key factors in determining which view is executed. In
