@@ -9,6 +9,7 @@ from pyramid.httpexceptions import HTTPNotFound
 from pyramid.security import authenticated_userid
 from pyramid.security import forget
 from pyramid.security import remember
+from pyramid.view import forbidden_view_config
 from pyramid.view import view_config
 
 ### DEFINE MODEL
@@ -55,7 +56,7 @@ _make_demo_page('hello', owner='luser',
 <h3>Hello World!</h3><p>I'm the body text</p>''')
 
 ### DEFINE VIEWS
-@view_config(context=HTTPForbidden)
+@forbidden_view_config()
 def forbidden_view(request):
     # do not allow a user to login if they are already logged in
     if authenticated_userid(request):
@@ -113,7 +114,7 @@ def user_view(request):
     login = request.matchdict['login']
     user = USERS.get(login)
     if not user:
-        return HTTPNotFound()
+        raise HTTPNotFound()
 
     pages = [p for (t, p) in PAGES.iteritems() if p.owner == login]
 
@@ -133,7 +134,7 @@ def page_view(request):
     uri = request.matchdict['title']
     page = PAGES.get(uri)
     if not page:
-        return HTTPNotFound()
+        raise HTTPNotFound()
 
     return {
         'page': page,
@@ -162,7 +163,7 @@ def validate_page(title, body):
 def create_page_view(request):
     owner = authenticated_userid(request)
     if owner is None:
-        return HTTPForbidden()
+        raise HTTPForbidden()
 
     errors = []
     body = title = ''
@@ -192,7 +193,7 @@ def edit_page_view(request):
     uri = request.matchdict['title']
     page = PAGES.get(uri)
     if not page:
-        return HTTPNotFound()
+        raise HTTPNotFound()
 
     errors = []
     title = page.title

@@ -115,7 +115,7 @@ invoke the `Forbidden View`_.
    def create_page_view(request):
        owner = authenticated_userid(request)
        if owner is None:
-           return HTTPForbidden()
+           raise HTTPForbidden()
 
        # ...
 
