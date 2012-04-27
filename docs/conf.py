@@ -38,7 +38,7 @@ master_doc = 'index'
 
 # General substitutions.
 project = 'pyramid_auth_demo'
-copyright = '2011, Michael Merickel <oss@m.merickel.org>'
+copyright = '2011, Michael Merickel'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
