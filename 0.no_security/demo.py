@@ -65,7 +65,10 @@ def forbidden_view(request):
     loc = request.route_url('login', _query=(('next', request.path),))
     return HTTPFound(location=loc)
 
-@view_config(route_name='home', renderer='home.mako')
+@view_config(
+    route_name='home',
+    renderer='home.mako',
+)
 def home_view(request):
     login = authenticated_userid(request)
     user = USERS.get(login)
@@ -75,7 +78,10 @@ def home_view(request):
         'user_pages': [p for (t, p) in PAGES.iteritems() if p.owner == login],
     }
 
-@view_config(route_name='login', renderer='login.mako')
+@view_config(
+    route_name='login',
+    renderer='login.mako',
+)
 def login_view(request):
     next = request.params.get('next') or request.route_url('home')
     login = ''
@@ -97,19 +103,27 @@ def login_view(request):
         'users': USERS,
     }
 
-@view_config(route_name='logout')
+@view_config(
+    route_name='logout',
+)
 def logout_view(request):
     headers = forget(request)
     loc = request.route_url('home')
     return HTTPFound(location=loc, headers=headers)
 
-@view_config(route_name='users',  renderer='users.mako')
+@view_config(
+    route_name='users',
+    renderer='users.mako',
+)
 def users_view(request):
     return {
         'users': sorted(USERS.keys()),
     }
 
-@view_config(route_name='user', renderer='user.mako')
+@view_config(
+    route_name='user',
+    renderer='user.mako',
+)
 def user_view(request):
     login = request.matchdict['login']
     user = USERS.get(login)
@@ -123,13 +137,19 @@ def user_view(request):
         'pages': pages,
     }
 
-@view_config(route_name='pages', renderer='pages.mako')
+@view_config(
+    route_name='pages',
+    renderer='pages.mako',
+)
 def pages_view(request):
     return {
         'pages': PAGES.values(),
     }
 
-@view_config(route_name='page', renderer='page.mako')
+@view_config(
+    route_name='page',
+    renderer='page.mako',
+)
 def page_view(request):
     uri = request.matchdict['title']
     page = PAGES.get(uri)
@@ -159,7 +179,10 @@ def validate_page(title, body):
         'errors': errors,
     }
 
-@view_config(route_name='create_page', renderer='edit_page.mako')
+@view_config(
+    route_name='create_page',
+    renderer='edit_page.mako',
+)
 def create_page_view(request):
     owner = authenticated_userid(request)
     if owner is None:
@@ -188,7 +211,10 @@ def create_page_view(request):
         'errors': errors,
     }
 
-@view_config(route_name='edit_page', renderer='edit_page.mako')
+@view_config(
+    route_name='edit_page',
+    renderer='edit_page.mako',
+)
 def edit_page_view(request):
     uri = request.matchdict['title']
     page = PAGES.get(uri)

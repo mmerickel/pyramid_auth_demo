@@ -37,7 +37,7 @@ From the :ref:`base_app`, the ``User`` object already has a list of
 to its groups:
 
 .. literalinclude:: ../1.group_security/demo.py
-   :lines: 71-74
+   :lines: 72-75
 
 The groups are prefixed with the "g:" to help distinguish them as
 principals related to the user's groups.
@@ -55,11 +55,11 @@ unless they are an "editor" or an "admin".
 
 .. code-block:: python
 
-    [
-        (Allow, Authenticated, 'create'),
-        (Allow, 'g:editor', 'edit'),
-        (Allow, 'g:admin', ALL_PERMISSIONS),
-    ]
+   [
+       (Allow, Authenticated, 'create'),
+       (Allow, 'g:editor', 'edit'),
+       (Allow, 'g:admin', ALL_PERMISSIONS),
+   ]
 
 Notice how the principals in the ACL match up with the principals
 returned from the `groupfinder`. Pyramid's default authentication
@@ -90,8 +90,8 @@ be configured to use it as such. Root factories are explained in more
 detail in :ref:`the_resource_tree`.
 
 .. literalinclude:: ../1.group_security/demo.py
-   :lines: 245-257
-   :emphasize-lines: 248, 256
+   :lines: 274-286
+   :emphasize-lines: 277, 285
 
 Securing the Views
 ==================
@@ -110,8 +110,8 @@ principal to the "create" permission. Now we can lock down the view
 for ``'/create_page'`` to require the "create" permission.
 
 .. literalinclude:: ../1.group_security/demo.py
-   :lines: 180-183
-   :emphasize-lines: 180
+   :lines: 203-209
+   :emphasize-lines: 205
 
 Edit Page View
 --------------
@@ -122,8 +122,8 @@ mapped these groups to the "edit" permission, so simply add it to the
 view.
 
 .. literalinclude:: ../1.group_security/demo.py
-   :lines: 208-210
-   :emphasize-lines: 208
+   :lines: 234-239
+   :emphasize-lines: 236
 
 User Views
 ----------
@@ -137,14 +137,14 @@ Here we'll use the "admin" permission.
 ``'/users'``:
 
   .. literalinclude:: ../1.group_security/demo.py
-     :lines: 124-125
-     :emphasize-lines: 124
+     :lines: 133-138
+     :emphasize-lines: 135
 
 ``'/user/{login}'``:
 
   .. literalinclude:: ../1.group_security/demo.py
-     :lines: 130-131
-     :emphasize-lines: 130
+     :lines: 143-148
+     :emphasize-lines: 145
 
 Simple Object-Level Authorization
 =================================

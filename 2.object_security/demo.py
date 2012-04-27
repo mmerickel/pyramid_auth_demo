@@ -12,6 +12,7 @@ from pyramid.security import authenticated_userid
 from pyramid.security import Everyone
 from pyramid.security import forget
 from pyramid.security import remember
+from pyramid.view import forbidden_view_config
 from pyramid.view import view_config
 
 ### DEFINE MODEL
@@ -114,7 +115,7 @@ def groupfinder(userid, request):
         return ['g:%s' % g for g in user.groups]
 
 ### DEFINE VIEWS
-@view_config(context=HTTPForbidden)
+@forbidden_view_config()
 def forbidden_view(request):
     # do not allow a user to login if they are already logged in
     if authenticated_userid(request):
@@ -123,7 +124,10 @@ def forbidden_view(request):
     loc = request.route_url('login', _query=(('next', request.path),))
     return HTTPFound(location=loc)
 
-@view_config(route_name='home', renderer='home.mako')
+@view_config(
+    route_name='home',
+    renderer='home.mako',
+)
 def home_view(request):
     login = authenticated_userid(request)
     user = USERS.get(login)
@@ -133,7 +137,10 @@ def home_view(request):
         'user_pages': [p for (t, p) in PAGES.iteritems() if p.owner == login],
     }
 
-@view_config(route_name='login', renderer='login.mako')
+@view_config(
+    route_name='login',
+    renderer='login.mako',
+)
 def login_view(request):
     next = request.params.get('next') or request.route_url('home')
     login = ''
@@ -155,19 +162,29 @@ def login_view(request):
         'users': USERS,
     }
 
-@view_config(route_name='logout')
+@view_config(
+    route_name='logout',
+)
 def logout_view(request):
     headers = forget(request)
     loc = request.route_url('home')
     return HTTPFound(location=loc, headers=headers)
 
-@view_config(route_name='users', permission='view', renderer='users.mako')
+@view_config(
+    route_name='users',
+    permission='view',
+    renderer='users.mako',
+)
 def users_view(request):
     return {
         'users': sorted(USERS.keys()),
     }
 
-@view_config(route_name='user', permission='view', renderer='user.mako')
+@view_config(
+    route_name='user',
+    permission='view',
+    renderer='user.mako',
+)
 def user_view(request):
     user = request.context
     pages = [p for (t, p) in PAGES.iteritems() if p.owner == user.login]
@@ -177,13 +194,21 @@ def user_view(request):
         'pages': pages,
     }
 
-@view_config(route_name='pages', permission='view', renderer='pages.mako')
+@view_config(
+    route_name='pages',
+    permission='view',
+    renderer='pages.mako',
+)
 def pages_view(request):
     return {
         'pages': PAGES.values(),
     }
 
-@view_config(route_name='page', permission='view', renderer='page.mako')
+@view_config(
+    route_name='page',
+    permission='view',
+    renderer='page.mako',
+)
 def page_view(request):
     page = request.context
 
@@ -210,8 +235,11 @@ def validate_page(title, body):
         'errors': errors,
     }
 
-@view_config(route_name='create_page', permission='create',
-             renderer='edit_page.mako')
+@view_config(
+    route_name='create_page',
+    permission='create',
+    renderer='edit_page.mako',
+)
 def create_page_view(request):
     owner = authenticated_userid(request)
 
@@ -238,8 +266,11 @@ def create_page_view(request):
         'errors': errors,
     }
 
-@view_config(route_name='edit_page', permission='edit',
-             renderer='edit_page.mako')
+@view_config(
+    route_name='edit_page',
+    permission='edit',
+    renderer='edit_page.mako',
+)
 def edit_page_view(request):
     uri = request.matchdict['title']
     page = request.context
