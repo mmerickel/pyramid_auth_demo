@@ -1,4 +1,4 @@
-import urllib
+import urllib.request
 
 from pyramid.authentication import AuthTktAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
@@ -34,7 +34,7 @@ class Page(object):
 
 def websafe_uri(txt):
     uri = txt.replace(' ', '-')
-    return urllib.quote(uri)
+    return urllib.request.quote(uri)
 
 ### INITIALIZE MODEL
 USERS = {}
@@ -94,7 +94,7 @@ def home_view(request):
 
     return {
         'user': user,
-        'user_pages': [p for (t, p) in PAGES.iteritems() if p.owner == login],
+        'user_pages': [p for (t, p) in PAGES.items() if p.owner == login],
     }
 
 @view_config(
@@ -151,7 +151,7 @@ def user_view(request):
     if not user:
         raise HTTPNotFound()
 
-    pages = [p for (t, p) in PAGES.iteritems() if p.owner == login]
+    pages = [p for (t, p) in PAGES.items() if p.owner == login]
 
     return {
         'user': user,
