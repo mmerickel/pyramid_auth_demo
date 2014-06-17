@@ -274,6 +274,8 @@ def main(global_settings, **settings):
     config.add_route('page', '/page/{title}')
     config.add_route('edit_page', '/page/{title}/edit')
 
+
+    config.include('pyramid_mako')
     config.scan(__name__)
     return config.make_wsgi_app()
 
