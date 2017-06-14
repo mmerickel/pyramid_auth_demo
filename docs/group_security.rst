@@ -90,8 +90,8 @@ be configured to use it as such. Root factories are explained in more
 detail in :ref:`the_resource_tree`.
 
 .. literalinclude:: ../1.group_security/demo.py
-   :lines: 274-286
-   :emphasize-lines: 277, 285
+   :lines: 274-285
+   :emphasize-lines: 6, 12
 
 Securing the Views
 ==================
@@ -111,7 +111,7 @@ for ``'/create_page'`` to require the "create" permission.
 
 .. literalinclude:: ../1.group_security/demo.py
    :lines: 203-209
-   :emphasize-lines: 205
+   :emphasize-lines: 3
 
 Edit Page View
 --------------
@@ -123,7 +123,7 @@ view.
 
 .. literalinclude:: ../1.group_security/demo.py
    :lines: 234-239
-   :emphasize-lines: 236
+   :emphasize-lines: 3
 
 User Views
 ----------
@@ -138,13 +138,13 @@ Here we'll use the "admin" permission.
 
   .. literalinclude:: ../1.group_security/demo.py
      :lines: 133-138
-     :emphasize-lines: 135
+     :emphasize-lines: 3
 
 ``'/user/{login}'``:
 
   .. literalinclude:: ../1.group_security/demo.py
      :lines: 143-148
-     :emphasize-lines: 145
+     :emphasize-lines: 3
 
 Simple Object-Level Authorization
 =================================

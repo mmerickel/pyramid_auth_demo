@@ -173,7 +173,7 @@ routes to use the new ``UserFactory`` instead of the default ``Root``
 factory.
 
 .. literalinclude:: ../2.object_security/demo.py
-   :lines: 325-327
+   :lines: 324-326
 
 The ``'user'`` route also overrides the ``traverse`` parameter to
 load the ``User`` object for that URL. The matched ``login`` in the
@@ -220,7 +220,7 @@ routes to use the new ``PageFactory`` instead of the default ``Root``
 factory.
 
 .. literalinclude:: ../2.object_security/demo.py
-   :lines: 329-334
+   :lines: 328-333
 
 The ``'page'`` and ``'edit_page'`` routes also override the
 ``traverse`` parameter to load the ``Page`` object for that URL. The

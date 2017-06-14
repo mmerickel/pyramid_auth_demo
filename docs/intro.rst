@@ -58,12 +58,3 @@ levels of functionality to this application:
    For example, "michael" created the "Demo" ``Page`` object, thus he can
    "edit" and "delete" it. But he cannot "edit" or "delete" the "Pyramid"
    ``Page`` because he is not the owner.
-
-#. :ref:`full_app`
-
-   Look at how a real application can be configured around a ``User`` object
-   that is available on the current request. We will implement our own
-   Pyramid :term:`authentication policy` to have full control over its
-   details. During authentication, we will check the database to ensure
-   that the ``User`` object still exists, disallowing deleted users from
-   accessing the system.

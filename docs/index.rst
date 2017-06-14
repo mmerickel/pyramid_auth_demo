@@ -41,5 +41,4 @@ Indices and tables
    :hidden:
 
    glossary
-   full_app
 

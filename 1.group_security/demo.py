@@ -272,18 +272,17 @@ def edit_page_view(request):
 
 ### CONFIGURE PYRAMID
 def main(global_settings, **settings):
+    config = Configurator(settings=settings)
+
     authn_policy = AuthTktAuthenticationPolicy(
         settings['auth.secret'],
         callback=groupfinder,
     )
     authz_policy = ACLAuthorizationPolicy()
 
-    config = Configurator(
-        settings=settings,
-        authentication_policy=authn_policy,
-        authorization_policy=authz_policy,
-        root_factory=Root,
-    )
+    config.set_authentication_policy(authn_policy)
+    config.set_authorization_policy(authz_policy)
+    config.set_root_factory(Root)
 
     config.add_route('home', '/')
     config.add_route('login', '/login')
@@ -297,6 +296,7 @@ def main(global_settings, **settings):
     config.add_route('page', '/page/{title}')
     config.add_route('edit_page', '/page/{title}/edit')
 
+    config.include('pyramid_mako')
     config.scan(__name__)
     return config.make_wsgi_app()
 
