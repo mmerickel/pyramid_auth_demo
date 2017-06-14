@@ -1,4 +1,4 @@
-import urllib.request
+import urllib.parse
 
 from pyramid.authentication import AuthTktAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
@@ -47,7 +47,7 @@ class Page(object):
 
 def websafe_uri(txt):
     uri = txt.replace(' ', '-')
-    return urllib.request.quote(uri)
+    return urllib.parse.quote(uri)
 
 ### INITIALIZE MODEL
 USERS = {}
