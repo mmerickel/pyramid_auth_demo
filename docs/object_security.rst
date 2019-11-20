@@ -163,7 +163,7 @@ per-instance of the object. The new ACL contains an entry for a
 principal matching the ``login`` property of the object.
 
 .. literalinclude:: ../2.object_security/demo.py
-   :lines: 19-24
+   :lines: 18-23
 
 Defining the Routes
 ~~~~~~~~~~~~~~~~~~~
@@ -173,7 +173,7 @@ routes to use the new ``UserFactory`` instead of the default ``Root``
 factory.
 
 .. literalinclude:: ../2.object_security/demo.py
-   :lines: 324-326
+   :lines: 323-325
 
 The ``'user'`` route also overrides the ``traverse`` parameter to
 load the ``User`` object for that URL. The matched ``login`` in the
@@ -210,7 +210,7 @@ per-instance of the object. The new ACL contains an entry for a
 principal matching the ``owner`` property of the object.
 
 .. literalinclude:: ../2.object_security/demo.py
-   :lines: 34-40
+   :lines: 33-39
 
 Defining the Routes
 ~~~~~~~~~~~~~~~~~~~
@@ -220,7 +220,7 @@ routes to use the new ``PageFactory`` instead of the default ``Root``
 factory.
 
 .. literalinclude:: ../2.object_security/demo.py
-   :lines: 328-333
+   :lines: 327-332
 
 The ``'page'`` and ``'edit_page'`` routes also override the
 ``traverse`` parameter to load the ``Page`` object for that URL. The

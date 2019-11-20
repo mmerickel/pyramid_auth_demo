@@ -6,7 +6,6 @@ from pyramid.config import Configurator
 from pyramid.httpexceptions import HTTPForbidden
 from pyramid.httpexceptions import HTTPFound
 from pyramid.httpexceptions import HTTPNotFound
-from pyramid.security import authenticated_userid
 from pyramid.security import forget
 from pyramid.security import remember
 from pyramid.view import forbidden_view_config
@@ -59,7 +58,7 @@ _make_demo_page('hello', owner='luser',
 @forbidden_view_config()
 def forbidden_view(request):
     # do not allow a user to login if they are already logged in
-    if authenticated_userid(request):
+    if request.authenticated_userid:
         return HTTPForbidden()
 
     loc = request.route_url('login', _query=(('next', request.path),))
@@ -70,7 +69,7 @@ def forbidden_view(request):
     renderer='home.mako',
 )
 def home_view(request):
-    login = authenticated_userid(request)
+    login = request.authenticated_userid
     user = USERS.get(login)
 
     return {
@@ -184,7 +183,7 @@ def validate_page(title, body):
     renderer='edit_page.mako',
 )
 def create_page_view(request):
-    owner = authenticated_userid(request)
+    owner = request.authenticated_userid
     if owner is None:
         raise HTTPForbidden()
 

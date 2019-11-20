@@ -37,7 +37,7 @@ From the :ref:`base_app`, the ``User`` object already has a list of
 to its groups:
 
 .. literalinclude:: ../1.group_security/demo.py
-   :lines: 72-75
+   :lines: 71-74
 
 The groups are prefixed with the "g:" to help distinguish them as
 principals related to the user's groups.
@@ -90,7 +90,7 @@ be configured to use it as such. Root factories are explained in more
 detail in :ref:`the_resource_tree`.
 
 .. literalinclude:: ../1.group_security/demo.py
-   :lines: 274-285
+   :lines: 273-284
    :emphasize-lines: 6, 12
 
 Securing the Views
@@ -110,7 +110,7 @@ principal to the "create" permission. Now we can lock down the view
 for ``'/create_page'`` to require the "create" permission.
 
 .. literalinclude:: ../1.group_security/demo.py
-   :lines: 203-209
+   :lines: 202-208
    :emphasize-lines: 3
 
 Edit Page View
@@ -137,13 +137,13 @@ Here we'll use the "admin" permission.
 ``'/users'``:
 
   .. literalinclude:: ../1.group_security/demo.py
-     :lines: 133-138
+     :lines: 132-137
      :emphasize-lines: 3
 
 ``'/user/{login}'``:
 
   .. literalinclude:: ../1.group_security/demo.py
-     :lines: 143-148
+     :lines: 142-147
      :emphasize-lines: 3
 
 Simple Object-Level Authorization

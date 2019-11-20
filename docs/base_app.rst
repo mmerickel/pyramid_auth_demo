@@ -30,8 +30,8 @@ Startup
 
 ::
 
-   virtualenv --no-site-packages env
-   env/bin/pip install pyramid
+   python3 -m venv env
+   env/bin/pip install pyramid pyramid-mako
    env/bin/python demo.py
 
 Model
@@ -113,7 +113,7 @@ invoke the `Forbidden View`_.
 
    @view_config(route_name='create_page', renderer='edit_page.mako')
    def create_page_view(request):
-       owner = authenticated_userid(request)
+       owner = request.authenticated_userid
        if owner is None:
            raise HTTPForbidden()
 
